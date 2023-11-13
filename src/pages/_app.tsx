@@ -1,12 +1,12 @@
 import "@/styles/globals.css";
 import "daisyui/dist/full.css";
-import {useRef} from "react";
+import { useRef } from "react";
 import { NextWebVitalsMetric } from "next/app";
 import Head from "next/head";
-import {QueryClient, QueryClientProvider, Hydrate} from "react-query";
-import { DehydratedState } from "react-query/hydration";
-import {ReactQueryDevtools} from "react-query/devtools";
+import { QueryClient, QueryClientProvider, Hydrate } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import PropTypes from "prop-types";
+import { RecoilRoot } from "recoil";
 
 import { MyAppProps } from "@/interface/AppProps";
 
@@ -17,17 +17,19 @@ const App = ({ Component, pageProps }: MyAppProps) => {
   }
 
   return (
-    <QueryClientProvider client={queryClientRef.current}>
-      <Hydrate state={pageProps.dehydratedState}>
+    <RecoilRoot>
+      <QueryClientProvider client={queryClientRef.current}>
         <Head>
           <meta charSet="utf-8" />
           <link rel="icon" href="/favicon.ico" />
           <title>Next Playground</title>
         </Head>
-        <Component {...pageProps} />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </Hydrate>
-    </QueryClientProvider>
+        <Hydrate state={pageProps.dehydratedState}>
+          <Component {...pageProps} />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </Hydrate>
+      </QueryClientProvider>
+    </RecoilRoot>
   );
 };
 

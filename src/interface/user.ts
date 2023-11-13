@@ -1,6 +1,6 @@
-import Post from './post';
+import Post from "./post";
 
-export default interface User{
+export default interface User {
   id: number;
   email: string;
   nickname: string;
